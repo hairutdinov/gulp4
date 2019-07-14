@@ -1,17 +1,18 @@
-const gulp = require("gulp");
-const concat = require("gulp-concat");
-const autoprefixer = require("gulp-autoprefixer");
-const cleanCSS = require('gulp-clean-css');
-const uglify = require('gulp-uglify');
-const del = require('del');
-const browserSync = require('browser-sync').create();
-const babel = require('gulp-babel');
-
+const   gulp = require("gulp"),
+        concat = require("gulp-concat"),
+        autoprefixer = require("gulp-autoprefixer"),
+        cleanCSS = require('gulp-clean-css'),
+        uglify = require('gulp-uglify'),
+        del = require('del'),
+        browserSync = require('browser-sync').create(),
+        babel = require('gulp-babel'),
+        sass = require('gulp-sass'),
+        smartgrid = require('smart-grid'),
+        sourcemaps = require("gulp-sourcemaps");
 
 const cssFiles = [
     "./node_modules/normalize.css/normalize.css",
-    "./src/css/some.css",
-    "./src/css/other.css",
+    "./src/scss/main.scss"
 ];
 
 const jsFiles = [
@@ -24,6 +25,8 @@ const jsFiles = [
 
 function styles() {
     return gulp.src(cssFiles)
+                .pipe(sourcemaps.init())
+                .pipe(sass())
                 .pipe(concat("all.css"))
                 .pipe(autoprefixer({
                     browsers: ['> 0.1%'],
@@ -32,6 +35,7 @@ function styles() {
                 .pipe(cleanCSS({
                     level: 2
                 }))
+                .pipe(sourcemaps.write())
                 .pipe(gulp.dest("./dist/css"))
                 // .pipe(browserSync.stream());
 }
@@ -58,7 +62,7 @@ function watch() {
     //         baseDir: "./"
     //     }
     // });
-    gulp.watch('./src/css/**/*.css', styles);
+    gulp.watch('./src/scss/**/*.scss', styles);
     gulp.watch('./src/js/**/*.js', scripts);
     // gulp.watch('./*.html', browserSync.reload);
 }
