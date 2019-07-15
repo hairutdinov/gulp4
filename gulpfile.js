@@ -18,8 +18,8 @@ const cssFiles = [
 const jsFiles = [
     "./node_modules/moment/moment.js",
     "./node_modules/jquery/dist/jquery.min.js",
-    "./src/js/lib.js",
-    "./src/js/some.js"
+    "./src/js/lodash.min.js",
+    "./src/js/main.js",
 ];
 
 
